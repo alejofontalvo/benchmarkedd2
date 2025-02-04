@@ -1,25 +1,33 @@
 #!/bin/sh
 
-echo "Ejecutando benchmark..."
+SOLUTIONS_DIR="Soluciones"
+LANGUAGES="C# GO Java JavaScript Python"
 
-for lang in /BS/soluciones/*; do
-    if [ -d "$lang" ]; then
-        echo "Construyendo y ejecutando solución en $(basename "$lang")..."
-        
-        # Construir la imagen del lenguaje
-        docker build -t benchmark-$(basename "$lang") "$lang"
+for lang in $LANGUAGES; do
+    echo "==== Construyendo y ejecutando $lang ===="
 
-        # Ejecutar el contenedor y guardar la salida en output.txt
-        docker run --rm benchmark-$(basename "$lang") > "$lang/output.txt"
+    cd "$SOLUTIONS_DIR/$lang"
 
-        # Mostrar la salida en consola
-        cat "$lang/output.txt"
-    fi
+    # Construir la imagen
+    docker build -t ${lang,,}-solution .
+
+    # Ejecutar el contenedor y capturar salida
+    # (La salida debe ser el tiempo en milisegundos)
+    TIME_MS=$(docker run --rm ${lang,,}-solution)
+
+    # Verificar output.txt (opcional: copiando con docker cp o
+    # montando volumen; dependerá de cómo definiste el Dockerfile)
+    # Ejemplo usando contenedor efímero:
+    CID=$(docker create ${lang,,}-solution)
+    docker cp $CID:/app/output.txt ./output.txt
+    docker rm $CID
+
+    # Leer el resultado
+    RESULT=$(cat output.txt)
+
+    echo "Tiempo (ms) = $TIME_MS, Resultado = $RESULT"
+    cd ../../
 done
-
-echo "Benchmark completado."
-#sleep infinity  # Para que el contenedor base no se cierre
-
 
 
 
