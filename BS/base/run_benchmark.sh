@@ -2,7 +2,7 @@
 
 set -e
 
-SOLUTIONS_DIR="Soluciones"
+SOLUTIONS_DIR="soluciones"
 LANGUAGES=("python" "csharp" "go" "java" "javascript")
 
 for lang in $LANGUAGES; do
