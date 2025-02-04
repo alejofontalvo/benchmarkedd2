@@ -1,15 +1,15 @@
 # Base/Dockerfile
 FROM docker:dind
 
-# Instalar dependencias en la imagen
+# Instala bash y git dentro de la imagen
 RUN apk update && apk add --no-cache bash git
 
-# Crear carpeta de trabajo
+# Crea carpeta de trabajo
 WORKDIR /app
 
-# Copiamos el script de orquestación al contenedor
+# Copia el script de orquestación
 COPY run_benchmark.sh /app/run_benchmark.sh
 RUN chmod +x /app/run_benchmark.sh
 
-# Al arrancar el contenedor, se ejecutará tu script
+# Al iniciar el contenedor, se ejecuta el script
 CMD ["/app/run_benchmark.sh"]
