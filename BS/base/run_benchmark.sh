@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-SOLUTIONS_DIR="/app/Soluciones"
+SOLUTIONS_DIR="/app/soluciones"
 LANGUAGES=("python" "csharp" "go" "java" "javascript")
 
 echo "=== Iniciando Benchmark ==="
