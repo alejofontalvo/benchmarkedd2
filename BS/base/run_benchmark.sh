@@ -2,7 +2,7 @@
 
 echo "Ejecutando benchmark..."
 
-for lang in /benchmark/soluciones/*; do
+for lang in /BS/soluciones/*; do
     if [ -d "$lang" ]; then
         echo "Construyendo y ejecutando solución en $(basename "$lang")..."
         
