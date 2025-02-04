@@ -1,4 +1,4 @@
 FROM python:3.8
 WORKDIR /app
 COPY solve.py .
-CMD python solve.py > output.txt && cat output.txt
+ENTRYPOINT ["python", "solve.py"]
