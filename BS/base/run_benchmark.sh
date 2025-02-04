@@ -1,7 +1,9 @@
 #!/bin/sh
 
+set -e
+
 SOLUTIONS_DIR="Soluciones"
-LANGUAGES="C# GO Java JavaScript Python"
+LANGUAGES=("python" "csharp" "go" "java" "javascript")
 
 for lang in $LANGUAGES; do
     echo "==== Construyendo y ejecutando $lang ===="
