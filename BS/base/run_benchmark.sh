@@ -2,7 +2,6 @@
 
 echo "Ejecutando benchmark..."
 
-# Recorrer todas las soluciones y ejecutar sus contenedores
 for lang in /benchmark/soluciones/*; do
     if [ -d "$lang" ]; then
         echo "Ejecutando solución en $(basename "$lang")..."
@@ -13,6 +12,8 @@ for lang in /benchmark/soluciones/*; do
 done
 
 echo "Benchmark completado."
+sleep infinity  # Mantiene el contenedor vivo
+
 
 
 
