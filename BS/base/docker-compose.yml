@@ -1,9 +1,9 @@
+version: '3'
 services:
-  benchmark-runner:
-    build: .  # Construye desde el Dockerfile de la carpeta Base
+  base:
+    image: benchmark-base
+    build: .
     privileged: true
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      # Montar la carpeta de soluciones
-      - ../soluciones:/app/soluciones
 
