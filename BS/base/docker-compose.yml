@@ -1,11 +1,9 @@
-version: "3"
-
 services:
-  base:
-    image: benchmark-base
-    build: .
-    privileged: true  # Permite acceso completo al sistema
+  benchmark-runner:
+    build: .  # Construye desde el Dockerfile de la carpeta Base
+    privileged: true
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock  # Permite ejecutar Docker dentro del contenedor
-      - ../soluciones:/benchmark/soluciones  # Monta las soluciones dentro del contenedor
+      - /var/run/docker.sock:/var/run/docker.sock
+      # Montar la carpeta de soluciones
+      - ../Soluciones:/app/Soluciones
 
