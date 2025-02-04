@@ -1,4 +1,4 @@
-FROM python:3.9-slim
+FROM python:3.8
 WORKDIR /app
-COPY solve.py /app/solve.py
-CMD ["python", "/app/solve.py"]
+COPY solve.py .
+CMD python solve.py > output.txt && cat output.txt
