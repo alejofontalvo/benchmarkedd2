@@ -3,7 +3,7 @@
 set -e
 
 SOLUTIONS_DIR="Soluciones"
-LANGUAGES=("python" "csharp" "go" "java" "javascript")
+LANGUAGES= "python csharp go java javascript"
 
 for lang in $LANGUAGES; do
     echo "==== Construyendo y ejecutando $lang ===="
