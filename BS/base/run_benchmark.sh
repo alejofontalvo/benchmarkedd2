@@ -1,36 +1,33 @@
-#!/bin/sh
-
+#!/bin/bash
 set -e
 
-SOLUTIONS_DIR="soluciones"
+SOLUTIONS_DIR="/app/Soluciones"
 LANGUAGES=("python" "csharp" "go" "java" "javascript")
 
-for lang in $LANGUAGES; do
-    echo "==== Construyendo y ejecutando $lang ===="
+echo "=== Iniciando Benchmark ==="
+for lang in "${LANGUAGES[@]}"; do
+  FOLDER="$SOLUTIONS_DIR/$lang"
+  if [ -d "$FOLDER" ]; then
+    echo "=== Construyendo y ejecutando $lang ==="
+    cd "$FOLDER"
+    docker build -t "benchmark-$lang" .
+    TIME_MS=$(docker run --rm "benchmark-$lang")
 
-    cd "$SOLUTIONS_DIR/$lang"
+    # Extraer el output.txt
+    CID=$(docker create "benchmark-$lang")
+    docker cp "$CID:/app/output.txt" ./output.txt
+    docker rm "$CID"
 
-    # Construir la imagen
-    docker build -t ${lang,,}-solution .
-
-    # Ejecutar el contenedor y capturar salida
-    # (La salida debe ser el tiempo en milisegundos)
-    TIME_MS=$(docker run --rm ${lang,,}-solution)
-
-    # Verificar output.txt (opcional: copiando con docker cp o
-    # montando volumen; dependerá de cómo definiste el Dockerfile)
-    # Ejemplo usando contenedor efímero:
-    CID=$(docker create ${lang,,}-solution)
-    docker cp $CID:/app/output.txt ./output.txt
-    docker rm $CID
-
-    # Leer el resultado
     RESULT=$(cat output.txt)
-
-    echo "Tiempo (ms) = $TIME_MS, Resultado = $RESULT"
-    cd ../../
+    echo "  - Tiempo (ms): $TIME_MS"
+    echo "  - Resultado  : $RESULT"
+    echo
+    cd /app
+  else
+    echo "Carpeta $FOLDER no existe. Se omite."
+  fi
 done
-
+echo "=== Benchmark completado ==="
 
 
 
