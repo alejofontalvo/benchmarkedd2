@@ -5,5 +5,5 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       # Montar la carpeta de soluciones
-      - ../Soluciones:/app/Soluciones
+      - ../soluciones:/app/soluciones
 
